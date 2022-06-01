@@ -1,7 +1,8 @@
 import { View, Pressable, Text, StyleSheet, Platform } from "react-native";
 
 // I expect to get the title as prop
-const CategoryGridTile = ({ title, color }) => {
+const CategoryGridTile = ({ title, color, onTapped }) => {
+  //console.log(onTapped);
   return (
     <View style={[styles.gridItem]}>
       {/* for pressable component, we get a pressed value from the style prop */}
@@ -12,6 +13,7 @@ const CategoryGridTile = ({ title, color }) => {
           styles.button,
           pressed && styles.buttonPressed,
         ]}
+        onPress={onTapped}
       >
         <View style={[styles.innerContainer, { backgroundColor: color }]}>
           <Text style={styles.title}>{title}</Text>
