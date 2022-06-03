@@ -1,31 +1,22 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Pressable,
-  SafeAreaView,
-} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 
 const MealItem = ({ title, imageUrl, affordability, duration, complexity }) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Pressable
         style={({ pressed }) => {
           return pressed ? styles.buttonPressed : styles.notPressed;
         }}
-        onPress={() => console.log(`Image with ${title} was pressed!`)}
+        onPress={() => {
+          return navigation.navigate("Detail Screen", {
+            mealName: title,
+          });
+        }}
       >
-        <Image
-          source={{ uri: imageUrl }}
-          style={{
-            width: "100%",
-            height: 200,
-            alignSelf: "center",
-            borderRadius: 10,
-            resizeMode: "cover",
-          }}
-        />
+        <Image source={{ uri: imageUrl }} style={styles.imageStyle} />
         <View style={styles.description}>
           <View style={{ marginVertical: 5 }}>
             <Text style={{ fontSize: 15, fontWeight: "bold" }}>{title}</Text>
@@ -58,8 +49,16 @@ const styles = StyleSheet.create({
   description: {
     alignItems: "center",
     backgroundColor: "white",
-
-    borderRadius: 5,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  imageStyle: {
+    width: "100%",
+    height: 200,
+    alignSelf: "center",
+    resizeMode: "cover",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
 });
 
