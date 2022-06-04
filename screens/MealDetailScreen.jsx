@@ -5,6 +5,7 @@ import List from "../Components/MealDetail/List";
 import Subtitle from "../Components/MealDetail/Subtitle";
 import MealDetails from "../Components/MealDetails";
 import { MEALS } from "../data/dummydata";
+import IconButton from "../Components/IconButton";
 
 const MealDetailScreen = ({ route, navigation }) => {
   const mealParams = {
@@ -19,13 +20,20 @@ const MealDetailScreen = ({ route, navigation }) => {
   const selectedMeal = MEALS.find((meal) => meal.id === mealParams.id);
   //console.log(selectedMeal);
 
+  const headerPressHandler = () => {
+    console.log("Pressed!");
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       contentStyle: {
         backgroundColor: "white",
       },
+      headerRight: () => {
+        return <IconButton onPress={headerPressHandler} />;
+      },
     });
-  });
+  }, [navigation, headerPressHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>
