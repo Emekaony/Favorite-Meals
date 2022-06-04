@@ -1,7 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 
-const MealItem = ({ title, imageUrl, affordability, duration, complexity }) => {
+import MealDetails from "./MealDetails";
+
+const MealItem = ({
+  mealId,
+  title,
+  imageUrl,
+  affordability,
+  duration,
+  complexity,
+}) => {
   const navigation = useNavigation();
 
   return (
@@ -12,21 +21,23 @@ const MealItem = ({ title, imageUrl, affordability, duration, complexity }) => {
         }}
         onPress={() => {
           return navigation.navigate("Detail Screen", {
-            mealName: title,
+            mealId: mealId,
+            title: title,
+            imageUrl: imageUrl,
+            affordability: affordability,
+            complexity: complexity,
+            duration: duration,
           });
         }}
       >
         <Image source={{ uri: imageUrl }} style={styles.imageStyle} />
         <View style={styles.description}>
-          <View style={{ marginVertical: 5 }}>
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>{title}</Text>
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Text>
-              {duration}m {complexity.toUpperCase()}{" "}
-              {affordability.toUpperCase()}
-            </Text>
-          </View>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>{title}</Text>
+          <MealDetails
+            affordability={affordability}
+            complexity={complexity}
+            duration={duration}
+          />
         </View>
       </Pressable>
     </View>
