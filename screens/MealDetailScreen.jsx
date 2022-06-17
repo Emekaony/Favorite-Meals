@@ -1,13 +1,16 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useContext } from "react";
 import { StyleSheet, Text, Image, ScrollView, View } from "react-native";
 
 import List from "../Components/MealDetail/List";
 import Subtitle from "../Components/MealDetail/Subtitle";
 import MealDetails from "../Components/MealDetails";
 import { MEALS } from "../data/dummydata";
-import IconButton from "../Components/IconButton";
+import { FavoritesContext } from "../store/context/favorites-context";
+import { Ionicons } from "@expo/vector-icons";
 
 const MealDetailScreen = ({ route, navigation }) => {
+  const favoriteMealsCtx = useContext(FavoritesContext);
+
   const mealParams = {
     imageUrl: route.params.imageUrl,
     complexity: route.params.complexity,
@@ -18,10 +21,20 @@ const MealDetailScreen = ({ route, navigation }) => {
   };
 
   const selectedMeal = MEALS.find((meal) => meal.id === mealParams.id);
-  //console.log(selectedMeal);
+  // console.log(selectedMeal)
+  const mealIsFavorite = favoriteMealsCtx.ids.includes(mealParams.id);
+  // console.log(mealIsFavorite)s
 
-  const headerPressHandler = () => {
-    console.log("Pressed!");
+  const changeFavoriteStatusHandler = () => {
+    //console.log("Pressed!");
+    if (mealIsFavorite) {
+      // if this meal was already part of our favorites
+      // switch it back to a non fvaorite meal. Like a toggle
+      favoriteMealsCtx.removeFavorite(mealParams.id);
+    } else {
+      // if not part of the favorite, add it to the favorite
+      favoriteMealsCtx.addFavorite(mealParams.id);
+    }
   };
 
   useLayoutEffect(() => {
@@ -30,10 +43,17 @@ const MealDetailScreen = ({ route, navigation }) => {
         backgroundColor: "white",
       },
       headerRight: () => {
-        return <IconButton onPress={headerPressHandler} />;
+        return (
+          <Ionicons
+            name={mealIsFavorite ? "star" : "star-outline"}
+            size={24}
+            color={"white"}
+            onPress={changeFavoriteStatusHandler}
+          />
+        );
       },
     });
-  }, [navigation, headerPressHandler]);
+  }, [navigation, changeFavoriteStatusHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>

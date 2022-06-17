@@ -13,6 +13,7 @@ import {
   PurpleBackgroundColor,
   DarkBrown2,
 } from "../constants/Colors";
+import { FavoritesContextProvider } from "../store/context/favorites-context";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -61,34 +62,36 @@ const DrawerNavigator = () => {
 
 const MainNavigation = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: { backgroundColor: DarkBrown },
-          headerTintColor: "white",
-          contentStyle: {
-            backgroundColor: PurpleBackgroundColor,
-          },
-          headerBackTitle: "back",
-        }}
-      >
-        <Stack.Screen
-          name="Drawer"
-          component={DrawerNavigator}
-          options={{
-            headerShown: false,
+    <FavoritesContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: DarkBrown },
+            headerTintColor: "white",
+            contentStyle: {
+              backgroundColor: PurpleBackgroundColor,
+            },
+            headerBackTitle: "back",
           }}
-        />
-        <Stack.Screen name="Overview" component={MealsOverviewScreen} />
-        <Stack.Screen
-          name="Detail Screen"
-          component={MealDetailScreen}
-          options={{
-            title: "About the Meal",
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+        >
+          <Stack.Screen
+            name="Drawer"
+            component={DrawerNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen name="Overview" component={MealsOverviewScreen} />
+          <Stack.Screen
+            name="Detail Screen"
+            component={MealDetailScreen}
+            options={{
+              title: "About the Meal",
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </FavoritesContextProvider>
   );
 };
 
