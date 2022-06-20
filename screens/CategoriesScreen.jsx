@@ -1,4 +1,3 @@
-import { useLayoutEffect } from "react";
 import { FlatList, StyleSheet } from "react-native";
 
 import { CATEGORIES } from "../data/dummydata";
