@@ -8,13 +8,12 @@ import { MEALS } from "../data/dummydata";
 // context is definitely the way to go!!
 const FavoritesScreen = () => {
   const favoriteMealsCtx = useContext(FavoritesContext);
-  const favoriteMealsExist = favoriteMealsCtx.ids.length > 0;
 
   const displayedMeals = MEALS.filter((meal) =>
     favoriteMealsCtx.ids.includes(meal.id)
   );
 
-  if (!favoriteMealsExist) {
+  if (!(favoriteMealsCtx.ids.length > 0)) {
     return (
       <View style={styles.noFav}>
         <Text style={styles.noFavText}>No favorite meals selected</Text>
